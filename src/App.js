@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+//import {connect} from 'react-redux';
+//import { createStore } from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
-import LocationList from './components/LocationList';
-import ForecastExtended from './components/ForecastExtended';
+import LocationListContainer from './containers/LocationListContainer';
+import ForecastExtendedContainer from './containers/ForecastExtendedContainer';
+//import {setCity} from './actions';
+
+//import {store} from './store';
 import './App.css';
 
 const cities = [
@@ -16,20 +22,12 @@ const cities = [
   'Rio de Janeiro,br'
 ];
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      city: null,
-    }
-  }
 
-  handleSelectionLocation = (city) => {
-    this.setState({city});
-    console.log(`HandleSelectionLocation ${city}`);
-  }
+
+class App extends Component {
+
   render() {
-    const { city } = this.state;
+  
     return (
       <MuiThemeProvider>
         <Grid>
@@ -40,15 +38,12 @@ class App extends Component {
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              <LocationList cities = {cities} onSelectedLocation = {this.handleSelectionLocation}/>
+              <LocationListContainer cities={cities}></LocationListContainer>
             </Col>
             <Col xs={12} md={6}>
               <Paper zdepht={4}>
                 <div className="detail">
-                {
-                  city === null ? null :
-                  <ForecastExtended city = { city }/>
-                }
+                <ForecastExtendedContainer></ForecastExtendedContainer>
                 </div>
               </Paper>
             </Col>
@@ -63,5 +58,10 @@ class App extends Component {
     );
   }
 }
+/*
+App.propTypes = {
+  setCity: PropTypes.func.isRequired,
+}
+*/
 
 export default App;
